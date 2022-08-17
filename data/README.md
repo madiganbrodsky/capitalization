@@ -1,0 +1,1 @@
+The data of this experiment will consist of a list of words that a given participants chooses to be capitalized in a given passage. The data will also include the order in which the words were clicked on. 
