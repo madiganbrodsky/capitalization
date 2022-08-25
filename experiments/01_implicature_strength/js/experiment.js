@@ -20,21 +20,21 @@ function make_slides(f) {
       $('.err').hide();
     },
 
-    // this is executed when the participant clicks the "Continue button"
+    //this is executed when the participant clicks the Continue button
     button: function() {
-      // read in the value of the selected radio button
-      this.radio = $("input[name='number']:checked").val();
-      // check whether the participant selected a reasonable value (i.e, 5, 6, or 7)
-      if (this.radio == "5" || this.radio == "6" || this.radio == "7") {
-        // log response
-        this.log_responses();
-        // continue to next slide
-        exp.go();
-      } else {
-        // participant gave non-reasonable response --> show error message
-        $('.err').show();
-        this.log_responses();
-      }
+      // this delimits the string by spaces
+      words.split(" ")
+      // for each word in the string, create a span element and display it
+      $.each(words, function(idx, value) {
+        $("words").append($("<span>").text(value))
+        this.index = value.data(idx)
+      },
+      //when a word (span) is clicked, it will become uppercase and the index of that word will be recorded
+      $("words").click(function() {
+          jQuery(this).toUpperCase;
+          this.log_responses();
+          exp.go();
+      },
     },
 
     log_responses: function() {
@@ -43,9 +43,7 @@ function make_slides(f) {
       exp.data_trials.push({
         "slide_number_in_experiment": exp.phase,
         "id": "example1",
-        "response": this.radio,
-        "strangeSentence": "",
-        "sentence": "",
+        "response": this.index,
       });
     },
   });
@@ -95,19 +93,19 @@ function make_slides(f) {
   slides.trial = slide({
     name: "trial",
 
-    start: function() {
-      var stim = {
-        "TGrep": "37224:9",
-        "Context": "Speaker A:  and, and i, you know, i still provide most of the things that  go on around the house.<p>Speaker B: right.<p>Speaker A: so, uh, yeah and for a while i was going to school too, and tha-, it was tough.<p>Speaker B: yeah,  i uh, i think that while it 's a good change for i think women to be able  to fulfill their potential in whatever they feel, you know, their expertise may be .<p>Speaker A: uh-huh.<p>Speaker B: uh-huh.<p>Speaker A: uh, i think sometimes other things suffer and tha-, i think it 's hard to find a balance there.<p>Speaker B: ",
-        "EntireSentence": "but in some ways i think we are expected  to do it all.",
-        "ButNotAllSentence": "but in <strong>some, but not all</strong> ways i think we are expected  to do it all."
-      }    
+    // start: function() {
+    //   var stim = {
+    //     "TGrep": "37224:9",
+    //     "Context": "Speaker A:  and, and i, you know, i still provide most of the things that  go on around the house.<p>Speaker B: right.<p>Speaker A: so, uh, yeah and for a while i was going to school too, and tha-, it was tough.<p>Speaker B: yeah,  i uh, i think that while it 's a good change for i think women to be able  to fulfill their potential in whatever they feel, you know, their expertise may be .<p>Speaker A: uh-huh.<p>Speaker B: uh-huh.<p>Speaker A: uh, i think sometimes other things suffer and tha-, i think it 's hard to find a balance there.<p>Speaker B: ",
+    //     "EntireSentence": "but in some ways i think we are expected  to do it all.",
+    //     "ButNotAllSentence": "but in <strong>some, but not all</strong> ways i think we are expected  to do it all."
+    //   }
     // The 7 lines above from "start:..." to the end of var stim = {...}" define a placeholder stimulus that you will have to delete when
-    // loading in the individual stimulus data. 
+    // loading in the individual stimulus data.
 
     // To rotate through stimulus list, comment out the above 7 lines and  uncomment the following 2:
-    // present: exp.stimuli,
-    // present_handle : function(stim) {
+    present: exp.stimuli,
+    present_handle : function(stim) {
 
       // unselect all radio buttons at the beginning of each trial
       // (by default, the selection of the radio persists across trials)
@@ -121,7 +119,7 @@ function make_slides(f) {
       var original_sentence = stim.EntireSentence;
       var target_sentence = stim.ButNotAllSentence;
 
-      //handle display of context 
+      //handle display of context
       // if (exp.condition == "context") {
       //   // extract context data
       //   var contexthtml = stim.Context;
@@ -147,8 +145,8 @@ function make_slides(f) {
       this.strange = $("#check-strange:checked").val() === undefined ? 0 : 1;
       if (this.radio) {
         this.log_responses();
-        exp.go(); //use exp.go() if and only if there is no "present"ed data, ie no list of stimuli.
-        // _stream.apply(this); //use _stream.apply(this) if there is a list of "present" stimuli to rotate through
+        // exp.go(); //use exp.go() if and only if there is no "present"ed data, ie no list of stimuli.
+        _stream.apply(this); //use _stream.apply(this) if there is a list of "present" stimuli to rotate through
       } else {
         $('.err').show();
       }
@@ -158,8 +156,8 @@ function make_slides(f) {
     log_responses: function() {
       exp.data_trials.push({
         "id": this.stim.TGrep,
-        // "sentence": this.stim.ButNotAllSentence,
-        // "slide_number_in_experiment": exp.phase, //exp.phase is a built-in trial number tracker
+        "sentence": this.stim.ButNotAllSentence,
+        "slide_number_in_experiment": exp.phase, //exp.phase is a built-in trial number tracker
         "response": this.radio,
         "strangeSentence": this.strange
       });
@@ -184,7 +182,7 @@ function make_slides(f) {
     }
   });
 
-  // 
+  //
   slides.thanks = slide({
     name: "thanks",
     start: function() {
@@ -210,11 +208,11 @@ function init() {
   exp.catch_trials = [];
   var stimuli = all_stims;
 
-  exp.stimuli = stimuli; //call _.shuffle(stimuli) to randomize the order;
+  exp.stimuli = _.shuffle(stimuli); //call _.shuffle(stimuli) to randomize the order;
   exp.n_trials = exp.stimuli.length;
 
   // exp.condition = _.sample(["context", "no-context"]); //can randomize between subjects conditions here
-  
+
   exp.system = {
     Browser: BrowserDetect.browser,
     OS: BrowserDetect.OS,
