@@ -23,7 +23,7 @@ function make_slides(f) {
     //this is executed when the participant clicks the Continue button
     button: function() {
       // this delimits the string by spaces
-      words.split(" ")
+      "words".split(" ")
       // for each word in the string, create a span element and display it
       $.each(words, function(idx, value) {
         $("words").append($("<span>").text(value))
