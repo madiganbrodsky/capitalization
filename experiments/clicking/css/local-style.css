@@ -141,3 +141,8 @@ td:nth-child(9) {
 .slide {
 	border: 1px solid #666;
 }
+
+#words span:hover {
+    background: rgba(255, 218, 13, 0.3);
+    cursor: pointer;
+}
