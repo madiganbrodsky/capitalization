@@ -25,16 +25,16 @@ function make_slides(f) {
       // this delimits the string by spaces
       "words".split(" ")
       // for each word in the string, create a span element and display it
-      $.each(words, function(idx, value) {
+      $.each("words", function(idx, value) {
         $("words").append($("<span>").text(value))
         this.index = value.data(idx)
-      },
+      });
       //when a word (span) is clicked, it will become uppercase and the index of that word will be recorded
-      $("words").click(function() {
+      $("<span>").click(function() {
           jQuery(this).toUpperCase;
           this.log_responses();
           exp.go();
-      },
+      });
     },
 
     log_responses: function() {
