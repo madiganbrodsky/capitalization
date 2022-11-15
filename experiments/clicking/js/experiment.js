@@ -13,7 +13,7 @@ function make_slides(f) {
   // set up the first example slide
   slides.trial = slide({
     name: "trial",
-   
+
     // exp.stimuli stores the stimuli for each trial
     present: exp.stimuli,
     // present_handle gets called for each stimulus in exp.stimuli
@@ -26,7 +26,7 @@ function make_slides(f) {
       $("#words").html("");
 
       // this delimits the string by spaces
-      var words = "these are some words".split(" "); //should be replaced with data from stim
+      var words = "chris potts is the chair of the linguistics department. chair chris potts is responsible for the linguistics faculty at stanford university.".split(" "); //should be replaced with data from stim
       // for each word in the string, create a span element and display it
       $.each(words, function(idx, value) {
         $("#words").append(
@@ -61,7 +61,7 @@ function make_slides(f) {
         "index": elm.data("index"),
         "word": elm.text().toLowerCase(),
         "response_time": Date.now() - this.trial_start,
-        "operation": isUpper ? -1 : 1 // 1: capitalize, -1: decapitalize  
+        "operation": isUpper ? -1 : 1 // 1: capitalize, -1: decapitalize
       });
     },
 
@@ -112,7 +112,7 @@ function make_slides(f) {
     },
   });
 
-  
+
 
   // slide to collect subject information
   slides.subj_info = slide({
